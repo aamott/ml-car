@@ -3,7 +3,7 @@
 # modifies the /boot/config.txt to allow rpi-hardware-pwm to work.
 
 # Modify boot to enable pwm on GPIO_18 and GPIO_19
-pwm_enable='dtoverlay=pwm-2chan'
+pwm_enable='dtoverlay=pwm-2chan,pin=12,func=4,pin2=13,func2=4'
 configtxt="/boot/config.txt"
 if grep -Fxq "$pwm_enable" $configtxt
 then
