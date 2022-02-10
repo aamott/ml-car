@@ -1,0 +1,6 @@
+####################
+# Required for anything using the PCA9685 Servo Controller
+adafruit-circuitpython-servokit
+
+# Hardware PWM
+rpi-hardware-pwm
