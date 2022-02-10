@@ -31,9 +31,16 @@ Then clone the repository. Copy the link to this respository.
 Enter into the directory.  
 `cd ml-car` or the current folder name.
 
-### Install the Requirements
+## Install the Requirements*
 `pip install -r requirements.txt`  
 *The -r stands for requirements, as in requirements file.*
+
+## Enable hardware PWM (Saves CPU cycles)*
+Add `dtoverlay=pwm-2chan` to the end of your `/boot/config.txt` file.  
+To do so, you can run this command: `echo dtoverlay=pwm-2chan >> /boot/config.txt`
+
+## * Setup script
+As an alternative to the above two items, you can run the `setup.sh` script. 
 
 # Wiring
 For further information on the `PCA9685` servo controller, see [Adafruit 16 Channel Servo Driver with Raspberry Pi](https://learn.adafruit.com/adafruit-16-channel-servo-driver-with-raspberry-pi).
