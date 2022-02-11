@@ -13,7 +13,7 @@ from adafruit_servokit import ServoKit
 from rpi_hardware_pwm import HardwarePWM
 from gpiozero import LED
 
-class PiTank(vehicle.Vehicle):
+class PiCar(vehicle.Vehicle):
     """Controls a car that uses a single motor control for 
         speed control and a servo for steering. 
         Compatible with all systems that can control Vehicle
@@ -51,7 +51,7 @@ class PiTank(vehicle.Vehicle):
         # TODO: Make it so that if we choose pwm pins other than 12 and 13 
         #               it can switch to software PWM and use those pins.
         # Channel 0 is PWM pin 12
-        self.motor_pwm = HardwarePWM(pwm_channel=0, hz=25000)            
+        self.motor_pwm = HardwarePWM(pwm_channel=0, hz=25000)
         self.motor_pwm.start(0) # start at 0 duty cycle (off)
 
         self.motor_dir = LED(motor_dir_pin) # It's not an LED, but this is a convenient way to refer to a pin that turns on and off
@@ -60,7 +60,7 @@ class PiTank(vehicle.Vehicle):
             self.motor_2_pwm = HardwarePWM(pwm_channel=1, hz=25000)
             self.motor_2_pwm.start(0) # start at 0 duty cycle (off)
 
-            self.motor_2_dir = LED(motor_2_dir_pin) 
+            self.motor_2_dir = LED(motor_2_dir_pin)
 
         # Servo - i2C
         self.servo_chan = servo_chan
