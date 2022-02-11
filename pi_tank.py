@@ -1,5 +1,5 @@
 ####################
-# PiCar Tank
+# PiTank Tank
 # Controls a car that uses 2 or 4 wheels for both speed
 # and steering. Incompatible with cars that use 
 # a servo for steering. 
@@ -8,7 +8,7 @@
 
 import vehicle
 
-class PiCar(vehicle.Vehicle):
+class PiTank(vehicle.Vehicle):
     """Controls a car that uses 2 or 4 wheels for both speed
         and steering. Incompatible with cars that use 
         a servo for steering. 
@@ -120,6 +120,8 @@ class PiCar(vehicle.Vehicle):
             
             self.add_speed( to_add_to_speed )
 
+        return (left_motor_speed, right_motor_speed)
+
         
 
     #############################
@@ -129,8 +131,15 @@ class PiCar(vehicle.Vehicle):
     #############################
 
     def _update_electronics(self):
+        # Make sure motors are gong to be within their bounds
+        # This shouldn't be here. The logic should really all be in the body,
+        # since _calculate_motors is making changes to the numberes in the system.
+        left_motor_speed, right_motor_speed = self._calculate_motors()
 
+        #Set motor speeds
+        # left motor
         self._set_pwm_on_pin(left_pwm)
+        # right motor
 
     def _set_pwm_on_pin(self, pin_num):
         pass
