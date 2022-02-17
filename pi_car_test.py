@@ -3,9 +3,9 @@ from time import sleep
 
 car = PiCar()
 
-car.set_steering(0.5)
+car.set_steering(0.3)
 sleep(1)
-car.set_steering(-0.5)
+car.set_steering(-0.3)
 sleep(1)
 
 car.set_speed(1)
