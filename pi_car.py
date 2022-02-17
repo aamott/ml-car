@@ -24,7 +24,7 @@ class PiCar(vehicle.Vehicle):
         motor_pwm_pin = 12, motor_dir_pin = 17, motor_dir_back_pin = 27,
         motor_2_pwm_pin = 13, motor_2_dir_pin = 22, motor_2_dir_back_pin = 23,
         servo_chan = 0,
-        min_steering_angle=50, max_steering_angle=130):
+        min_steering_angle=0, max_steering_angle=180):
         """initializes with speed ranges, steering ranges, and pinout.
         Default pinout is for Raspberry Pi. PWM pins must be PWM pins on the Pi!
         Args:
@@ -69,8 +69,8 @@ class PiCar(vehicle.Vehicle):
             self.motor_2_dir_forward = LED(motor_2_dir_pin)
 
             # If motor requires 2 pins for direction
-            if motor_dir_back_pin:
-                self.motor_2_dir_back = LED(motor_dir_back_pin)
+            if motor_2_dir_back_pin:
+                self.motor_2_dir_back = LED(motor_2_dir_back_pin)
             else:
                 self.motor_2_dir_back = None
         else:
@@ -146,24 +146,23 @@ class PiCar(vehicle.Vehicle):
         self.servo_board.servo[self.servo_chan].angle = degrees
 
         #Set Direction
-        dir = 1 if self._speed > 1 else 0
+        dir = 1 if self._speed > 0 else 0
 
         # Set speed
         # find the midpoint between min and max speed
-        stopped = self.max_speed - self.min_speed
-        if dir > 1:
-            duty_cycle = fit_to_range(self._speed, stopped, self.max_speed, 0, 100)
-        else:
-            duty_cycle = fit_to_range(self._speed, self.min_speed, stopped, 0, 100)
+        duty_cycle = fit_to_range(self._speed, self.min_speed, self.max_speed, -100, 100)
+        if duty_cycle < 0: #make it always positive
+            duty_cycle *= -1
+        print("Duty Cycle: ", duty_cycle)
 
-        
+        print("Direction: ", dir)
         # SET MOTORS
 
         # Motor 1
         # speed
         self.motor_pwm.change_duty_cycle(duty_cycle)
         # direction
-        if dir ==1:
+        if dir == 1:
             self.motor_dir_forward.on()
             if self.motor_dir_back:
                 self.motor_dir_back.off()
