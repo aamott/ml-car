@@ -21,8 +21,8 @@ class PiCar(vehicle.Vehicle):
 
     def __init__(self, min_speed = -1, max_speed = 1,
         min_steering = -1, max_steering = 1,
-        motor_pwm_pin = 12, motor_dir_pin = 17,
-        motor_2_pwm_pin = 13, motor_2_dir_pin = 27,
+        motor_pwm_pin = 12, motor_dir_pin = 17, motor_dir_back_pin = 27,
+        motor_2_pwm_pin = 13, motor_2_dir_pin = 22, motor_2_dir_back_pin = 23,
         servo_chan = 0,
         min_steering_angle=0, max_steering_angle=180):
         """initializes with speed ranges, steering ranges, and pinout.
@@ -33,7 +33,8 @@ class PiCar(vehicle.Vehicle):
             min_steering: Number indicating full steering left.
             max_steering: Number indicating full steering right.
             motor_pwm: GPIO Pin number that will be used to control motor speed.
-            motor_dir: GPIO Pin number that will be used to set motor direction.
+            motor_dir_pin: GPIO Pin number that will be used to set motor direction.
+            motor_dir_back_pin: GPIO Pin to change direction on board that require two direction pins (forward and back)
             servo_chan: The channel of the servo on the board. On the far left of
                         Adafruit PCA9685, this would be 0.
         """
@@ -54,24 +55,42 @@ class PiCar(vehicle.Vehicle):
         self.motor_pwm = HardwarePWM(pwm_channel=0, hz=25000)
         self.motor_pwm.start(0) # start at 0 duty cycle (off)
 
-        self.motor_dir = LED(motor_dir_pin) # It's not an LED, but this is a convenient way to refer to a pin that turns on and off
+        self.motor_dir_forward = LED(motor_dir_pin) # It's not an LED, but this is a convenient way to refer to a pin that turns on and off
+        if motor_dir_back_pin:
+            self.motor_dir_back = LED(motor_dir_back_pin)
+        else:
+            self.motor_dir_back = None
 
+        # If motor 2 exists, we'll set it up. Otherwise, set all its values to None.
         if (motor_2_pwm_pin and motor_2_dir_pin):
             self.motor_2_pwm = HardwarePWM(pwm_channel=1, hz=25000)
             self.motor_2_pwm.start(0) # start at 0 duty cycle (off)
 
-            self.motor_2_dir = LED(motor_2_dir_pin)
+            self.motor_2_dir_forward = LED(motor_2_dir_pin)
+
+            # If motor requires 2 pins for direction
+            if motor_dir_back_pin:
+                self.motor_2_dir_back = LED(motor_dir_back_pin)
+            else:
+                self.motor_2_dir_back = None
+        else:
+            self.motor_2_pwm = None
+            self.motor_2_dir_forward = None
+            self.motor_2_dir_back = None
 
         # Servo - i2C
         self.servo_chan = servo_chan
         # Adafruit library automatically sets up the servo controller for us. 
         self.servo_board = ServoKit(channels=16)
 
+
     def get_speed(self):
         return self.speed
 
+
     def get_steering(self):
         return self.steering
+
 
     def set_speed(self, speed):
         """ Sets car speed. Range is min_speed to max_speed. """
@@ -145,19 +164,30 @@ class PiCar(vehicle.Vehicle):
         self.motor_pwm.change_duty_cycle(duty_cycle)
         # direction
         if dir ==1:
-            self.motor_2_dir.on()
+            self.motor_dir_forward.on()
+            if self.motor_dir_back:
+                self.motor_dir_back.off()
         else:
-            self.motor_2_dir.off()
+            self.motor_dir_forward.off()
+            if self.motor_dir_back:
+                self.motor_dir_back.on()
 
         # Motor 2
-        if self.motor_2_pwm:
+        if self.motor_2_dir_forward:
             # speed
-            self.motor_2_pwm.change_duty_cycle(duty_cycle)
+            if self.motor_2_pwm:
+                self.motor_2_pwm.change_duty_cycle(duty_cycle)
+            # else: TODO: Do something with software pwm here.
+            #     pass
             # direction
             if dir ==1:
-                self.motor_2_dir.on()
+                self.motor_2_dir_forward.on()
+                if self.motor_2_dir_back:
+                    self.motor_2_dir_back.off()
             else:
-                self.motor_2_dir.off()
+                self.motor_2_dir_forward.off()
+                if self.motor_2_dir_back:
+                    self.motor_2_dir_back.on()
 
 
 
