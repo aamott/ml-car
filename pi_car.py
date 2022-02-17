@@ -24,7 +24,7 @@ class PiCar(vehicle.Vehicle):
         motor_pwm_pin = 12, motor_dir_pin = 17, motor_dir_back_pin = 27,
         motor_2_pwm_pin = 13, motor_2_dir_pin = 22, motor_2_dir_back_pin = 23,
         servo_chan = 0,
-        min_steering_angle=0, max_steering_angle=180):
+        min_steering_angle=50, max_steering_angle=130):
         """initializes with speed ranges, steering ranges, and pinout.
         Default pinout is for Raspberry Pi. PWM pins must be PWM pins on the Pi!
         Args:
