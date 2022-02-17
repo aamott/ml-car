@@ -1,4 +1,9 @@
 from abc import abstractmethod, ABC
+###################################
+# Vehicle - Abstract Class
+# Defines the methods needed for
+#   PiVehicle
+###################################
 
 class Vehicle(ABC):
     """Abstract class. Interface to control a car. 
