@@ -24,7 +24,7 @@ class PiCar(vehicle.Vehicle):
         motor_pwm_pin = 12, motor_dir_pin = 17, motor_dir_back_pin = 27,
         motor_2_pwm_pin = 13, motor_2_dir_pin = 22, motor_2_dir_back_pin = 23,
         servo_chan = 0,
-        min_steering_angle=0, max_steering_angle=180):
+        min_steering_angle=15, max_steering_angle=60):
         """initializes with speed ranges, steering ranges, and pinout.
         Default pinout is for Raspberry Pi. PWM pins must be PWM pins on the Pi!
         Args:
@@ -141,9 +141,9 @@ class PiCar(vehicle.Vehicle):
 
     def _update_electronics(self):
         # Set steering
-        degrees = fit_to_range(self._steering, self.min_steering, self.max_steering,
+        self._degrees = fit_to_range(self._steering, self.min_steering, self.max_steering,
                                             self.min_steering_angle, self.max_steering_angle)
-        self.servo_board.servo[self.servo_chan].angle = degrees
+        self.servo_board.servo[self.servo_chan].angle = self._degrees
 
         #Set Direction
         dir = 1 if self._speed > 0 else 0
@@ -153,9 +153,7 @@ class PiCar(vehicle.Vehicle):
         duty_cycle = fit_to_range(self._speed, self.min_speed, self.max_speed, -100, 100)
         if duty_cycle < 0: #make it always positive
             duty_cycle *= -1
-        print("Duty Cycle: ", duty_cycle)
 
-        print("Direction: ", dir)
         # SET MOTORS
 
         # Motor 1
