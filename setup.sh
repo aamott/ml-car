@@ -17,9 +17,11 @@ else
     echo "Please reboot and run this script again once you are done."
     echo "Would you like to reboot now? (Y/n)"
     read answer
-    if [[ $answer == "Y" || $answer == "y" || $answer == "" ]]; then 
-        echo "You chose yes."
+    if $answer == "Y" || $answer == "y" || $answer == "" 
+    then 
+        echo "Rebooting now..."
+        sudo shutdown -r now
     else
-        echo "you chose no"
+        echo "Okay"
     fi
 fi
