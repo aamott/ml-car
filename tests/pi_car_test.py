@@ -1,6 +1,12 @@
+from sys import path
+path.append("./") # lets us import from the parent directory
 from pi_car import PiCar
 from time import sleep
 
+#########################
+# Default PiCar
+#########################
+print("Testing Default PiCar")
 car = PiCar()
 
 # Test steering
@@ -47,3 +53,6 @@ sleep(1)
 car.set_speed(0)
 print("Speed: ", car._speed)
 sleep(1)
+
+print()
+print()
