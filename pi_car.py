@@ -85,7 +85,7 @@ class PiCar(vehicle.Vehicle):
 
 
     def get_speed(self):
-        return self.speed
+        return self._speed
 
 
     def get_steering(self):
@@ -143,10 +143,10 @@ class PiCar(vehicle.Vehicle):
         # Set steering
         degrees = fit_to_range(self._steering, self.min_steering, self.max_steering,
                                             self.min_steering_angle, self.max_steering_angle)
-        self.servo_board.servo[self.servo_chan] = degrees
+        self.servo_board.servo[self.servo_chan].angle = degrees
 
         #Set Direction
-        dir = 1 if self.speed > 1 else 0
+        dir = 1 if self._speed > 1 else 0
 
         # Set speed
         # find the midpoint between min and max speed
