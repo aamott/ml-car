@@ -151,7 +151,7 @@ if __name__ == "__main__":
     # get streaming url
     if len(sys.argv) < 3:
         print("Using default streaming url. This probably won't work...")
-        stream_url = DEFAULT_STREAM_URL
+        stream_url = "rtsp://" + ip + ":8080/out.h264"
     else:
         stream_url = sys.argv[2]
 
