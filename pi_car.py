@@ -89,7 +89,7 @@ class PiCar(vehicle.Vehicle):
 
 
     def get_steering(self):
-        return self.steering
+        return self._steering
 
 
     def set_speed(self, speed):
