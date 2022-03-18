@@ -10,25 +10,25 @@ class Vehicle(ABC):
     """
 
     @abstractmethod
-    def get_steering(steering):
+    def get_steering(self):
         pass
     
     @abstractmethod
-    def get_speed(speed):
+    def get_speed(self):
         pass
     
     @abstractmethod
-    def set_steering(steering):
+    def set_steering(self, steering):
         pass
 
     @abstractmethod
-    def set_speed(speed):
+    def set_speed(self, speed):
         pass
 
     @abstractmethod
-    def add_steering(steering):
+    def add_steering(self, steering):
         pass
     
     @abstractmethod
-    def add_speed(speed):
+    def add_speed(self, speed):
         pass
