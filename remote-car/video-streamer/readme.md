@@ -1,6 +1,14 @@
 # Video Streamer
 This consists of two parts: the server (pi car) and the client (the system that will do the processing). 
 
+## General steps
+Starting with raspbian Bullseye, you will need to enable `Glamor` graphics acceleration for the camera stack to work. 
+1. In the terminal, enter `sudo raspi-config` and enter your password.
+2. Go to `Advanced Options`
+3. Select `Glamor` and enable it
+4. Reboot  
+Glamor is now enabled!
+
 ## Streaming Options
 There are a few options that are being tested right now for streaming video from the Raspberry Pi to OpenCV running on a client PC. 
 
