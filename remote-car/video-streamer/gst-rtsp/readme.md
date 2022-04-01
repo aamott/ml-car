@@ -1,6 +1,6 @@
 # GStreamer RTSP
 Unfortunately, gstreamer limits has no rtsp stream option. This should be a possible solution. 
-_These instructions are based on (this website)[https://www.stev.org/post/raspberrypisimplertspserver]
+_These instructions are based on (this website)[https://github.com/uutzinger/rtsp_server#create-simple-rtsp-server-on-raspberry-pi-or-similar-computer]
 
 ## Starting the server
 1. On the server (raspberry pi) run `sh gst-rtsp-server-setup.sh`
