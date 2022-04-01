@@ -4,11 +4,7 @@
 # raspivid -t 999999 -w 1080 -h 720 -fps 25 -hf -b 2000000 -o - | gst-launch-1.0 -v fdsrc ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=<IP-OF-PI> port=5000
 
 # old modified to use rpicamsrc
-# gst-launch-1.0 -v rpicamsrc  ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=<IP-OF-PI> port=5000
-
-# Found at https://stackoverflow.com/questions/13154983/gstreamer-rtp-stream-to-vlc by bzhu
-# videotestsrc changed to rpicamsrc according to https://github.com/thaytan/gst-rpicamsrc
-# gst-launch-1.0 rpicamsrc ! avenc_mpeg4 ! rtpmp4vpay config-interval=1 ! udpsink host=pivehicle port=5000
+# gst-launch-1.0 -v libcamerasrc  ! h264parse ! rtph264pay config-interval=1 pt=96 ! gdppay ! tcpserversink host=<IP-OF-PI> port=5000
 
 # Bullseye apparently doesn't like anything but libcamerasrc, so this was obtained from 
 # https://forums.raspberrypi.com/viewtopic.php?t=324193
