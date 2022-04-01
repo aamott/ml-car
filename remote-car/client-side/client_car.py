@@ -151,9 +151,12 @@ if __name__ == "__main__":
     # get streaming url
     if len(sys.argv) < 3:
         print("Using default streaming url. This probably won't work...")
-        stream_url = "rtsp://" + ip + ":8080/out.h264"
+        ip='192.168.137.248'
+        # stream_url = "rtp://" + ip + ":5000"
+        stream_url = "http://" + ip + ":8081"
     else:
         stream_url = sys.argv[2]
+    print("Connecting to stream", stream_url)
 
 
     # create remote car
