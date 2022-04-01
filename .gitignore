@@ -1,3 +1,5 @@
 __pycache__
 .vscode
 remote-car/video-streamer/http-server/motion/
+# Ignore the cloned folder
+remote-car/video-streamer/http-server/gst-rtsp/gst-rtsp-server*
