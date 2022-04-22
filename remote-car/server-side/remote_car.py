@@ -1,7 +1,10 @@
 ################################
 # Server Side PiCar
-# Network sends messages to control the car: 
-# Message consists of 3 parts:
+# Receives network messages to control the car. 
+# Requires a Vehicle object to be passed in. RemoteCar
+# will act as a wrapper to allow it to function over the 
+# network.  
+# Each message consists of 3 parts:
 #   1. Action
 #   ---------------
 #   g = get
@@ -34,9 +37,11 @@ from vehicle import Vehicle
 
 class RemoteCar(Vehicle):
     
-    def __init__(self, car) -> None:
+    def __init__(self, car : Vehicle) -> None:
         """ Creates a remote controllable car. 
             Launch this to start a remote controllable car.
+
+            param car: A Vehicle object
         """
         self.car = car
         # Server Stuff
