@@ -1,13 +1,23 @@
 ################################
-# Client Side Pibot
-# Network sends messages to control car: 
-# `sm-1` means set speed to -1
-# g = get
-# s = set
-# a = add
-#---------------
-# m = move/set speed
-# t = turn/set steering
+# Server Side PiCar
+# Network sends messages to control the car: 
+# Message consists of 3 parts:
+#   1. Action
+#   ---------------
+#   g = get
+#   s = set
+#   a = add
+# 
+#   2. Which value
+#   ---------------
+#   m = set speed (move)
+#   t = set steering (turn)
+# 
+#   3. Value (float)
+#   -----------------
+#   -1.0 to 1.0 (unless otherwise specified)
+# 
+#   For example,`sm-1` would mean set speed to -1
 ################################
 
 # Network stuff
@@ -66,9 +76,9 @@ class RemoteCar(Vehicle):
         # get the command type: (m)ove/set speed, (t)urn/set steering
         try:
             command = msg_rcvd[:2] 
-            # get the value, for example -1
+            # split value (for example, -0.8) and the command type
             val = msg_rcvd[2:]
-            val = int(val)
+            val = float(val)
         except Exception as e:
             print("ERROR : " + str(e))
 
