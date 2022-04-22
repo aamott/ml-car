@@ -133,6 +133,7 @@ class RemoteCar(Vehicle):
 
     def send_network_message(self, msg_to_send, address):
         """Send a message to an ip address"""
+        print("Responding with: " + msg_to_send)
         bytes_to_send = str.encode(msg_to_send)
         self.UDP_server_socket.sendto(bytes_to_send, address)
 
