@@ -13,7 +13,7 @@ from vehicle import Vehicle
 
 import cv2
 
-DEFAULT_IP = 'localhost'
+DEFAULT_IP = 'pivehicle'
 DEFAULT_PORT = 20001
 DEFAULT_STREAM_URL = 0#"rtsp://" + DEFAULT_IP + ":8080/out.h264"
 
@@ -101,14 +101,14 @@ class RemoteCar(Vehicle):
 
 
     def get_steering(self):
-        msg = GET + STEERING + 'a'
+        msg = GET + STEERING + '0'
         response = self.send_remote_message(msg)
         cmd, steering = self.parse_response(response)
         return steering
     
     
     def get_speed(self):
-        msg = GET + SPEED + 'a'
+        msg = GET + SPEED + '0'
         response = self.send_remote_message(msg)
         cmd, speed = self.parse_response(response)
         return speed
@@ -151,7 +151,7 @@ if __name__ == "__main__":
     # get streaming url
     if len(sys.argv) < 3:
         print("Using default streaming url. This probably won't work...")
-        ip='192.168.137.248'
+        ip='192.168.137.189'
         # stream_url = "rtp://" + ip + ":5000"
         stream_url = "http://" + ip + ":8081"
     else:
