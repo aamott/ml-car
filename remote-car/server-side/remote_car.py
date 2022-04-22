@@ -147,16 +147,24 @@ class RemoteCar(Vehicle):
 
 
 if __name__ == "__main__":
+    # TODO: Create command line arguments
 
-    # create default car
-    # from pi_car import PiCar
-    # car = PiCar()
+    # Create default car (with servo for steering)
+    from pi_car import PiCar
+    print("Creating default car...")
+    car = PiCar()
+
+    # # Create tank car (with no servo for steering)
+    # from pi_tank import PiTank
+    # print("Creating tank car")
+    # car = PiTank()
     
-    #  TESTING
-    from stub_car import StubCar
-    print("Using stub car. For testing only.")
-    car = StubCar()
+    # #  Create a stub car
+    # from stub_car import StubCar
+    # print("Using stub car. For testing only.")
+    # car = StubCar()
     
+    print("Starting remote car...")
     remote_car = RemoteCar(car=car)
 
     print("UDP server up and listening")
