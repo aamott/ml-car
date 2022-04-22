@@ -154,6 +154,7 @@ if __name__ == "__main__":
     
     #  TESTING
     from stub_car import StubCar
+    print("Using stub car. For testing only.")
     car = StubCar()
     
     remote_car = RemoteCar(car=car)
